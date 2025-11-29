@@ -1,12 +1,8 @@
--- ==========================================
--- SCRIPT DE INICIALIZACIÓN: RapidExpress DB
--- ==========================================
 
 DROP DATABASE IF EXISTS rapidexpress_db;
 CREATE DATABASE rapidexpress_db;
 USE rapidexpress_db;
 
--- 1. TABLA DE USUARIOS (ROLES)
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -17,7 +13,6 @@ CREATE TABLE usuarios (
     estado ENUM('ACTIVO', 'INACTIVO') DEFAULT 'ACTIVO'
 );
 
--- 2. TABLA DE VEHICULOS
 CREATE TABLE vehiculos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     placa VARCHAR(10) NOT NULL UNIQUE,
@@ -28,7 +23,6 @@ CREATE TABLE vehiculos (
     estado ENUM('DISPONIBLE', 'EN_RUTA', 'EN_MANTENIMIENTO') DEFAULT 'DISPONIBLE'
 );
 
--- 3. TABLA DE CONDUCTORES
 CREATE TABLE conductores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     identificacion VARCHAR(20) NOT NULL UNIQUE,
@@ -38,7 +32,6 @@ CREATE TABLE conductores (
     estado ENUM('ACTIVO', 'VACACIONES', 'INACTIVO') DEFAULT 'ACTIVO'
 );
 
--- 4. TABLA DE RUTAS
 CREATE TABLE rutas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     vehiculo_id INT NOT NULL,
@@ -50,7 +43,6 @@ CREATE TABLE rutas (
     FOREIGN KEY (conductor_id) REFERENCES conductores(id)
 );
 
--- 5. TABLA DE PAQUETES
 CREATE TABLE paquetes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tracking_id VARCHAR(50) NOT NULL UNIQUE,
@@ -65,7 +57,6 @@ CREATE TABLE paquetes (
     FOREIGN KEY (ruta_id) REFERENCES rutas(id)
 );
 
--- 6. HISTORIAL DE MANTENIMIENTO
 CREATE TABLE mantenimientos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     vehiculo_id INT NOT NULL,
@@ -73,9 +64,3 @@ CREATE TABLE mantenimientos (
     descripcion TEXT,
     FOREIGN KEY (vehiculo_id) REFERENCES vehiculos(id)
 );
-
--- DATOS INICIALES (SEMILLA)
-INSERT INTO usuarios (username, password, nombre_completo, rol) VALUES 
-('admin', '1234', 'Super Admin', 'ADMIN'),
-('operador', '1234', 'Juan Operador', 'OPERADOR'),
-('auxiliar', '1234', 'Pedro Mecanico', 'AUXILIAR');

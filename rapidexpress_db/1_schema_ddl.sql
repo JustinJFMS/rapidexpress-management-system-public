@@ -1,4 +1,3 @@
-
 DROP DATABASE IF EXISTS rapidexpress_db;
 CREATE DATABASE rapidexpress_db;
 USE rapidexpress_db;

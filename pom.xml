@@ -8,6 +8,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>com.mycompany.rapidexpress.management.system.RapidexpressManagementSystem</exec.mainClass>
+        <exec.mainClass>com.rapidexpress.RapidexpressManagementSystem</exec.mainClass>
     </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+    </dependencies>
 </project>

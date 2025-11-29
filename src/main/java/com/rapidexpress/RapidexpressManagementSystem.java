@@ -4,9 +4,9 @@
 
 package com.rapidexpress;
 
-import com.rapidexpress.config.DatabaseConnection;
+/*import com.rapidexpress.config.DatabaseConnection;
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.SQLException;*/
 
 /**
  *
@@ -15,11 +15,14 @@ import java.sql.SQLException;
 public class RapidexpressManagementSystem {
 
     public static void main(String[] args) {
-        System.out.println("--- INICIANDO SISTEMA RAPIDEXPRESS ---");
+        
+        // PRUEBA DE CONEXION A LA BD
+        
+        /*System.out.println("--- INICIANDO SISTEMA RAPIDEXPRESS ---");
         try (Connection conn = DatabaseConnection.getConnection()) {
             System.out.println("CONEXIÓN EXITOSA CON LA BASE DE DATOS");
         } catch (SQLException e) {
             System.out.println("ERROR DE CONEXIÓN: " + e.getMessage());
-        }
+        }*/
     }
 }

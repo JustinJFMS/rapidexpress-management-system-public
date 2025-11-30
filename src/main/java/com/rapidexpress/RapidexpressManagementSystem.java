@@ -1,28 +1,52 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.rapidexpress;
 
-/*import com.rapidexpress.config.DatabaseConnection;
+import com.rapidexpress.config.DatabaseConnection;
+import com.rapidexpress.dao.UsuarioDAO;
+import com.rapidexpress.model.Usuario;
 import java.sql.Connection;
-import java.sql.SQLException;*/
+import java.sql.SQLException;
+import java.util.Scanner;
 
-/**
- *
- * @author USUARIO
- */
 public class RapidexpressManagementSystem {
 
     public static void main(String[] args) {
-        
-        // PRUEBA DE CONEXION A LA BD
-        
-        /*System.out.println("--- INICIANDO SISTEMA RAPIDEXPRESS ---");
+
+        System.out.println("--- INICIANDO SISTEMA RAPIDEXPRESS ---");
+
+        // 1. (Opcional) Probar conexión
         try (Connection conn = DatabaseConnection.getConnection()) {
             System.out.println("CONEXIÓN EXITOSA CON LA BASE DE DATOS");
         } catch (SQLException e) {
             System.out.println("ERROR DE CONEXIÓN: " + e.getMessage());
-        }*/
+            return; // si no hay conexión, salimos del programa
+        }
+
+        // 2. Pedir credenciales por consola
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese su username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Ingrese su contraseña: ");
+        String password = scanner.nextLine();
+
+        // 3. Crear el DAO y llamar al método login
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        Usuario usuarioLogueado = usuarioDAO.login(username, password);
+
+        // 4. Verificar resultado
+        if (usuarioLogueado != null) {
+            System.out.println("\n LOGIN EXITOSO");
+            System.out.println("Bienvenido, " + usuarioLogueado.getNombreCompleto());
+            System.out.println("Rol: " + usuarioLogueado.getRol());
+
+            // Aquí luego puedes seguir con el menú principal del sistema
+            // por ejemplo: mostrarMenúPorRol(usuarioLogueado);
+
+        } else {
+            System.out.println("\n Credenciales incorrectas o usuario inactivo.");
+        }
+
+        scanner.close();
     }
 }

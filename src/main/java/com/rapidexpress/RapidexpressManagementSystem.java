@@ -13,7 +13,7 @@ public class RapidexpressManagementSystem {
 
         System.out.println("--- INICIANDO SISTEMA RAPIDEXPRESS ---");
 
-        // 1. (Opcional) Probar conexión
+        //Probar conexión
         try (Connection conn = DatabaseConnection.getConnection()) {
             System.out.println("CONEXIÓN EXITOSA CON LA BASE DE DATOS");
         } catch (SQLException e) {
@@ -21,7 +21,7 @@ public class RapidexpressManagementSystem {
             return; // si no hay conexión, salimos del programa
         }
 
-        // 2. Pedir credenciales por consola
+        //Pedir credenciales por consola
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Ingrese su username: ");
@@ -30,11 +30,11 @@ public class RapidexpressManagementSystem {
         System.out.print("Ingrese su contraseña: ");
         String password = scanner.nextLine();
 
-        // 3. Crear el DAO y llamar al método login
+        //Crear el DAO y llamar al método login
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         Usuario usuarioLogueado = usuarioDAO.login(username, password);
 
-        // 4. Verificar resultado
+        //Verificar resultado
         if (usuarioLogueado != null) {
             System.out.println("\n LOGIN EXITOSO");
             System.out.println("Bienvenido, " + usuarioLogueado.getNombreCompleto());

@@ -60,8 +60,9 @@ public class MainController {
 
             switch (opcion) {
                 case 1:
-                    System.out.println(">> Abriendo módulo de Vehículos...");
-                    // AQUÍ CONECTAREMOS EL CONTROLLER DE VEHÍCULOS PRONTO
+                    System.out.println("\n>> MÓDULO VEHÍCULOS");
+                    VehiculoController vController = new VehiculoController(); // ¡Ahora sí existe!
+                    vController.mostrarMenu(); 
                     break;
                 case 2:
                     System.out.println(">> Abriendo módulo de Conductores...");

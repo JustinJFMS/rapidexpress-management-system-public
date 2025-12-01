@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.rapidexpress.dao;
 
 import com.rapidexpress.config.DatabaseConnection;
@@ -14,10 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author thuale
- */
+
 public class VehiculoDAO {
     
     public boolean registrar(Vehiculo vehiculo){

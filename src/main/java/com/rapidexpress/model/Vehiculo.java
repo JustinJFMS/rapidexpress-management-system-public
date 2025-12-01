@@ -1,9 +1,6 @@
 package com.rapidexpress.model;
 
-/**
- *
- * @author ashly
- */
+
 public class Vehiculo {
     private int id;
     private String placa;

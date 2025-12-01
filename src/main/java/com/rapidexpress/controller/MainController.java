@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.rapidexpress.controller;
 
 import com.rapidexpress.model.Usuario;
 import java.util.Scanner;
 import com.rapidexpress.model.Rol;
 
-/**
- *
- * @author Pc
- */
+
 public class MainController {
     
     private final Scanner scanner;

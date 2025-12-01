@@ -1,6 +1,7 @@
 package com.rapidexpress;
 
 import com.rapidexpress.config.DatabaseConnection;
+import com.rapidexpress.controller.MainController;
 import com.rapidexpress.dao.UsuarioDAO;
 import com.rapidexpress.model.Usuario;
 import java.sql.Connection;
@@ -39,9 +40,10 @@ public class RapidexpressManagementSystem {
             System.out.println("\n LOGIN EXITOSO");
             System.out.println("Bienvenido, " + usuarioLogueado.getNombreCompleto());
             System.out.println("Rol: " + usuarioLogueado.getRol());
-
-            // Aquí luego puedes seguir con el menú principal del sistema
-            // por ejemplo: mostrarMenúPorRol(usuarioLogueado);
+            
+            MainController controller = new MainController();
+            controller.mostrarMenuPrincipal(usuarioLogueado);
+            usuarioLogueado = null;
 
         } else {
             System.out.println("\n Credenciales incorrectas o usuario inactivo.");

@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.rapidexpress.controller;
 
 import com.rapidexpress.model.Usuario;
 import java.util.Scanner;
 import com.rapidexpress.model.Rol;
 
-/**
- *
- * @author Pc
- */
+
 public class MainController {
     
     private final Scanner scanner;
@@ -60,8 +53,9 @@ public class MainController {
 
             switch (opcion) {
                 case 1:
-                    System.out.println(">> Abriendo módulo de Vehículos...");
-                    // AQUÍ CONECTAREMOS EL CONTROLLER DE VEHÍCULOS PRONTO
+                    System.out.println("\n>> MÓDULO VEHÍCULOS");
+                    VehiculoController vController = new VehiculoController(); // ¡Ahora sí existe!
+                    vController.mostrarMenu(); 
                     break;
                 case 2:
                     System.out.println(">> Abriendo módulo de Conductores...");

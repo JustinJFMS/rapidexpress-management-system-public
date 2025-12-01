@@ -1,9 +1,6 @@
 package com.rapidexpress.model;
 
-/**
- *
- * @author ashly
- */
+
 public class Usuario {
     
     private int id;

@@ -37,10 +37,12 @@ public class MainController {
     private void menuAdmin() {
         int opcion = -1;
         while (opcion != 0) {
-            System.out.println("\n1. Gestionar Vehículos");
+            System.out.println("\n--- MENÚ ADMINISTRADOR ---");
+            System.out.println("1. Gestionar Vehículos");
             System.out.println("2. Gestionar Conductores");
-            System.out.println("3. Gestionar Rutas");
-            System.out.println("4. Reportes");
+            System.out.println("3. Gestionar Paquetes");
+            System.out.println("4. Gestionar Rutas");
+            System.out.println("5. Reportes");
             System.out.println("0. Salir / Cerrar Sesión");
             System.out.print("Seleccione una opción: ");
             
@@ -54,11 +56,24 @@ public class MainController {
             switch (opcion) {
                 case 1:
                     System.out.println("\n>> MÓDULO VEHÍCULOS");
-                    VehiculoController vController = new VehiculoController(); // ¡Ahora sí existe!
+                    VehiculoController vController = new VehiculoController();  
                     vController.mostrarMenu(); 
                     break;
                 case 2:
-                    System.out.println(">> Abriendo módulo de Conductores...");
+                    System.out.println("\n>> MÓDULO CONDUCTORES");
+                    ConductorController cController = new ConductorController();
+                    cController.mostrarMenu();
+                    break;
+                case 3:
+                    System.out.println("\n>> MÓDULO PAQUETES");
+                    PaqueteController pController = new PaqueteController();
+                    pController.mostrarMenu();
+                    break;
+                case 4:
+                    System.out.println(">> (Módulo Rutas - Próximamente)");
+                    break;
+                case 5:
+                    System.out.println(">> (Módulo Reportes - Próximamente)");
                     break;
                 case 0:
                     System.out.println("Cerrando sesión...");

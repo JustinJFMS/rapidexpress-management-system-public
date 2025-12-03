@@ -54,7 +54,7 @@ public class ReporteController {
                 case 0:
                     break;
                 default:
-                    System.out.println("⚠️ Opción inválida.");
+                    System.out.println("Opción inválida.");
             }
         }
     }

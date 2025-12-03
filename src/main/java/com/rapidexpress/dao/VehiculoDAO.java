@@ -16,7 +16,7 @@ public class VehiculoDAO {
     public boolean registrar(Vehiculo vehiculo) {
     String sql = "INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_carga_kg, estado) VALUES (?, ?, ?, ?, ?, ?)";
     
-    // 1. Imprimimos qué datos estamos intentando enviar
+    // Imprimimos qué datos estamos intentando enviar
     System.out.println("--- DEBUG: Intentando registrar ---");
     System.out.println("Placa: " + vehiculo.getPlaca());
     System.out.println("Estado Enum: " + vehiculo.getEstado());
@@ -25,7 +25,7 @@ public class VehiculoDAO {
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
         if (conn == null) {
-            System.out.println("❌ CRÍTICO: La conexión es NULL. Revisa tu contraseña en DatabaseConnection.");
+            System.out.println("CRÍTICO: La conexión es NULL. Revisa tu contraseña en DatabaseConnection.");
             return false;
         }
 
@@ -43,9 +43,9 @@ public class VehiculoDAO {
         return filasAfectadas > 0;
 
     } catch (SQLException e) {
-        // 2. AQUÍ ESTÁ LA CLAVE: Imprimimos el error real de MySQL
-        System.err.println("❌ ERROR SQL REAL:");
-        e.printStackTrace(); // <--- ESTO ES LO QUE NECESITO VER
+        // Aqui es la clave imprimimos el error real de MySQL
+        System.err.println("ERROR SQL REAL:");
+        e.printStackTrace(); //esto es lo que se necesita ver
         return false;
     }
 }

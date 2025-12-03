@@ -1,6 +1,8 @@
 package com.rapidexpress.controller;
 
 import com.rapidexpress.dao.ConductorDAO;
+import com.rapidexpress.dao.PaqueteDAO;
+import com.rapidexpress.model.Paquete;
 import com.rapidexpress.dao.RutaDAO;
 import com.rapidexpress.dao.VehiculoDAO;
 import com.rapidexpress.model.Conductor;
@@ -15,11 +17,13 @@ import java.util.stream.Collectors;
 
 public class RutaController {
     private final RutaDAO rutaDAO;
+    private final PaqueteDAO paqueteDAO;
     private final VehiculoDAO vehiculoDAO;
     private final ConductorDAO conductorDAO;
     private final Scanner scanner;
 
     public RutaController() {
+        this.paqueteDAO = new PaqueteDAO();
         this.rutaDAO = new RutaDAO();
         this.vehiculoDAO = new VehiculoDAO();
         this.conductorDAO = new ConductorDAO();
@@ -120,8 +124,8 @@ public class RutaController {
             System.out.println("¡Ruta creada exitosamente!");
             System.out.println("El vehículo ha cambiado a estado EN_RUTA automáticamente.");
             
-            // AQUÍ LLAMAREMOS A LA ASIGNACIÓN DE PAQUETES EN EL SIGUIENTE PASO!!!!!! 
-            System.out.println("️RECUERDA: Ahora debes asignar los paquetes a esta ruta.");
+            // Llamamos al método que acabamos de crear para llenar el camión
+            cargarPaquetesEnRuta(nuevaRuta.getId());
         } else {
             System.out.println("Error al crear la ruta.");
         }
@@ -180,13 +184,58 @@ public class RutaController {
             System.out.println("Error al finalizar ruta.");
         }
     }
-
+    
     // Para leer enteros sin que explote el Scanner
     private int leerEntero() {
         try {
             return Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             return -1;
+        }
+    }
+    
+        private void cargarPaquetesEnRuta(int rutaId) {
+        System.out.println("\n>> CARGA DE PAQUETES");
+        System.out.println("Seleccione los paquetes que irán en esta ruta.");
+        System.out.println("(Escriba '0' cuando termine de cargar)");
+
+        boolean terminadaCarga = false;
+        while (!terminadaCarga) {
+            // Listamos solo paquetes que están EN BODEGA
+            List<Paquete> enBodega = paqueteDAO.listarEnBodega();
+            
+            if (enBodega.isEmpty()) {
+                System.out.println("No hay más paquetes en bodega para asignar.");
+                break;
+            }
+
+            System.out.println("\n--- Paquetes en Bodega ---");
+            for (Paquete p : enBodega) {
+                System.out.printf("ID: %d | %s | %s -> %s (%.1f Kg)%n", 
+                        p.getId(), p.getTrackingId(), p.getDireccionOrigen(), p.getDireccionDestino(), p.getPesoKg());
+            }
+
+            // Pedir selección
+            System.out.print("\nIngrese ID del paquete a cargar (0 para terminar): ");
+            int idPaquete = leerEntero();
+
+            if (idPaquete == 0) {
+                terminadaCarga = true;
+                System.out.println("Carga finalizada.");
+            } else {
+                // Validamos y Asignamos
+                Paquete p = paqueteDAO.buscarPorId(idPaquete);
+                // Verificamos que exista y que este en bodega
+                if (p != null && "EN_BODEGA".equals(p.getEstado().name())) {
+                    if (paqueteDAO.asignarRuta(idPaquete, rutaId)) {
+                        System.out.println("Paquete " + p.getTrackingId() + " cargado al camión.");
+                    } else {
+                        System.out.println("Error al asignar.");
+                    }
+                } else {
+                    System.out.println("ID inválido o paquete no disponible.");
+                }
+            }
         }
     }
 }

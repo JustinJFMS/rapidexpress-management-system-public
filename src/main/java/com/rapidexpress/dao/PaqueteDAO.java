@@ -123,4 +123,41 @@ public class PaqueteDAO {
         p.setEstado(EstadoPaquete.valueOf(rs.getString("estado")));
         return p;
     }
+        // Asignaremos ruta
+    public boolean asignarRuta(int idPaquete, int idRuta){
+        // cambiamos el estado a ASIGNADO y guardamos el ID de la ruta
+        String sql = "UPDATE paquetes SET ruta_id = ?, estado = 'ASIGNADO' WHERE id = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idRuta);
+            stmt.setInt(2, idPaquete);
+
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al asignar paquete: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    // Buscaremos por id
+    public Paquete buscarPorId(int id) {
+        String sql = "SELECT * FROM paquetes WHERE id = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapearPaquete(rs);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al buscar por ID: " + e.getMessage());
+        }
+        return null;
+    }
 }

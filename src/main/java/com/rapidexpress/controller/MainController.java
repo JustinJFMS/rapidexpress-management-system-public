@@ -3,6 +3,8 @@ package com.rapidexpress.controller;
 import com.rapidexpress.model.Usuario;
 import java.util.Scanner;
 import com.rapidexpress.model.Rol;
+import com.rapidexpress.controller.RutaController;
+import com.rapidexpress.controller.ReporteController;
 
 
 public class MainController {
@@ -43,6 +45,7 @@ public class MainController {
             System.out.println("3. Gestionar Paquetes");
             System.out.println("4. Gestionar Rutas");
             System.out.println("5. Reportes");
+            System.out.println("6. Gestionar Usuarios (Crear Cuentas)");
             System.out.println("0. Salir / Cerrar Sesión");
             System.out.print("Seleccione una opción: ");
             
@@ -70,10 +73,19 @@ public class MainController {
                     pController.mostrarMenu();
                     break;
                 case 4:
-                    System.out.println(">> (Módulo Rutas - Próximamente)");
+                    System.out.println("\n>> MÓDULO RUTAS");
+                    RutaController rController = new RutaController();
+                    rController.mostrarMenu();
                     break;
                 case 5:
-                    System.out.println(">> (Módulo Reportes - Próximamente)");
+                    System.out.println("\n>> MÓDULO REPORTES");
+                    ReporteController repController = new ReporteController();
+                    repController.mostrarMenu();
+                    break;
+                case 6:
+                    System.out.println("\n>> MÓDULO DE USUARIOS");
+                    UsuarioController uController = new UsuarioController();
+                    uController.mostrarMenu();
                     break;
                 case 0:
                     System.out.println("Cerrando sesión...");
@@ -85,14 +97,76 @@ public class MainController {
     }
 
     private void menuOperador() {
-        System.out.println("1. Gestionar Rutas y Paquetes");
-        System.out.println("0. Salir");
-        // Aquí implementarás la lógica del operador después
+        int opcion = -1;
+        while (opcion != 0) {
+            System.out.println("\n--- MENÚ OPERADOR LOGÍSTICO ---");
+            System.out.println("1. Gestionar Rutas (Despachos)");
+            System.out.println("2. Gestionar Paquetes (Envíos)");
+            System.out.println("3. Reportes Operativos");
+            System.out.println("0. Cerrar Sesión");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1:
+                    // Reutilizamos el controlador que ya creamos
+                    RutaController rController = new RutaController();
+                    rController.mostrarMenu();
+                    break;
+                case 2:
+                    PaqueteController pController = new PaqueteController();
+                    pController.mostrarMenu();
+                    break;
+                case 3:
+                    ReporteController repController = new ReporteController();
+                    repController.mostrarMenu();
+                    break;
+                case 0:
+                    System.out.println("Cerrando sesión de operador...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        }
     }
 
     private void menuAuxiliar() {
-        System.out.println("1. Registrar Mantenimiento");
-        System.out.println("0. Salir");
-        // Aquí implementarás la lógica del auxiliar después
+        int opcion = -1;
+        while (opcion != 0) {
+            System.out.println("\n--- MENÚ AUXILIAR DE FLOTA ---");
+            System.out.println("1. Gestionar Estado de Vehículos (Mantenimiento)");
+            System.out.println("2. Ver Reporte de Flota");
+            System.out.println("0. Cerrar Sesión");
+            System.out.print("Seleccione una opción: ");
+
+            try {
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
+
+            switch (opcion) {
+                case 1:
+                    // Usamos el menu de vehiculos para enviar a MANTENIMIENTO
+                    VehiculoController vController = new VehiculoController();
+                    vController.mostrarMenu();
+                    break;
+                case 2:
+                    // Un reporte rapido solo para ver que carros estan para mantenimiento
+                    ReporteController repController = new ReporteController();
+                    repController.mostrarMenu();
+                    break;
+                case 0:
+                    System.out.println("Cerrando sesión de auxiliar...");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        }
     }
 }

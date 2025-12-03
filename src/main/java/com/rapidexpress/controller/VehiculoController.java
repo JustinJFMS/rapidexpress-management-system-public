@@ -1,7 +1,9 @@
 package com.rapidexpress.controller;
 
+import com.rapidexpress.dao.MantenimientoDAO;
 import com.rapidexpress.dao.VehiculoDAO;
 import com.rapidexpress.model.EstadoVehiculo;
+import com.rapidexpress.model.Mantenimiento;
 import com.rapidexpress.model.Vehiculo;
 import java.util.List;
 import java.util.Scanner;
@@ -115,14 +117,15 @@ public class VehiculoController {
     private void actualizarEstadoVehiculo(){
         System.out.println("\n>> ACTUALIZAR ESTADO");
         System.out.print("Ingrese la PLACA del vehículo a modificar: ");
-        String placa = scanner.nextLine();
+        String placa = scanner.nextLine().toUpperCase();
 
         Vehiculo v = vehiculoDAO.buscarPorPlaca(placa);
         if(v == null){
             System.out.println("No se encontró ningún vehículo con esa placa.");
             return;
         }   
-
+        
+        System.out.println("Vehículo: " + v.getMarca() + " " + v.getModelo());
         System.out.println("Estado actual: " + v.getEstado());
         System.out.println("Seleccione nuevo estado:");
         System.out.println("1. DISPONIBLE");
@@ -136,17 +139,40 @@ public class VehiculoController {
         }
 
         EstadoVehiculo nuevoEstado = null;
-        if (op == 1) nuevoEstado = EstadoVehiculo.DISPONIBLE;
-        else if (op == 2) nuevoEstado = EstadoVehiculo.EN_MANTENIMIENTO;
+        String descripcionMantenimiento = null;
+            
+        if (op == 1) {
+            nuevoEstado = EstadoVehiculo.DISPONIBLE;
+        } 
+        else if (op == 2) {
+            nuevoEstado = EstadoVehiculo.EN_MANTENIMIENTO;
+            // --- AQUÍ ESTÁ EL ARREGLO ---
+            System.out.print("Ingrese el motivo del mantenimiento (Descripción): ");
+            descripcionMantenimiento = scanner.nextLine();
+            if (descripcionMantenimiento.isEmpty()) descripcionMantenimiento = "Mantenimiento General";
+        } 
         else {
             System.out.println("Opción inválida.");
             return;
         }
 
+        // PRIMERO ACTUALIZAMOS EL ESTADO DEL VEHÍCULO
         if (vehiculoDAO.actualizarEstado(v.getId(), nuevoEstado)) {
-            System.out.println("Estado actualizado correctamente.");
+            System.out.println("Estado del vehículo actualizado a: " + nuevoEstado);
+
+            // GUARDAMOS HISTORIAL
+            if (nuevoEstado == EstadoVehiculo.EN_MANTENIMIENTO) {
+                MantenimientoDAO mantDao = new MantenimientoDAO();
+                Mantenimiento registro = new Mantenimiento(v.getId(), descripcionMantenimiento);
+                
+                if (mantDao.registrar(registro)) {
+                    System.out.println("Registro guardado en el historial de mantenimientos.");
+                } else {
+                    System.out.println("OJO: El estado cambió, pero falló el registro en el historial.");
+                }
+            }
         } else {
-            System.out.println("Error al actualizar.");
+            System.out.println("Error al actualizar estado.");
         }
     }
 }

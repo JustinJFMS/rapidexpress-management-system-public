@@ -45,6 +45,7 @@ public class MainController {
             System.out.println("3. Gestionar Paquetes");
             System.out.println("4. Gestionar Rutas");
             System.out.println("5. Reportes");
+            System.out.println("6. Gestionar Usuarios (Crear Cuentas)");
             System.out.println("0. Salir / Cerrar Sesión");
             System.out.print("Seleccione una opción: ");
             
@@ -80,6 +81,11 @@ public class MainController {
                     System.out.println("\n>> MÓDULO REPORTES");
                     ReporteController repController = new ReporteController();
                     repController.mostrarMenu();
+                    break;
+                case 6:
+                    System.out.println("\n>> MÓDULO DE USUARIOS");
+                    UsuarioController uController = new UsuarioController();
+                    uController.mostrarMenu();
                     break;
                 case 0:
                     System.out.println("Cerrando sesión...");

@@ -17,7 +17,6 @@ public class Ruta {
     
     // Constructor para crear una nueva ruta
     public Ruta(int vehiculoId, int conductorId){
-        this.id = id;
         this.vehiculoId = vehiculoId;
         this.conductorId = conductorId;
         this.fechaInicio = LocalDateTime.now();

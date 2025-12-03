@@ -13,28 +13,42 @@ import java.util.List;
 
 public class VehiculoDAO {
     
-    public boolean registrar(Vehiculo vehiculo){
-        String sql = "INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_carga_kg, estado) VALUES (?, ?, ?, ?, ?, ?,)";
-        
-        try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
-            
-            stmt.setString(1, vehiculo.getPlaca());
-            stmt.setString(2, vehiculo.getMarca());
-            stmt.setString(3, vehiculo.getModelo());
-            stmt.setInt(4, vehiculo.getAnioFabricacion());
-            stmt.setDouble(5, vehiculo.getCapacidadCargaKg());
-            //Guardar el Enum como String
-            stmt.setString(6, vehiculo.getEstado().name());
-            
-            int filasAfectadas = stmt.executeUpdate();
-            return filasAfectadas > 0; // true si guardo correctamente
-            
-        } catch (Exception e) {
-            System.err.println("Error al registrar vehiculo: " + e.getMessage());
+    public boolean registrar(Vehiculo vehiculo) {
+    String sql = "INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_carga_kg, estado) VALUES (?, ?, ?, ?, ?, ?)";
+    
+    // 1. Imprimimos qué datos estamos intentando enviar
+    System.out.println("--- DEBUG: Intentando registrar ---");
+    System.out.println("Placa: " + vehiculo.getPlaca());
+    System.out.println("Estado Enum: " + vehiculo.getEstado());
+    
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        if (conn == null) {
+            System.out.println("❌ CRÍTICO: La conexión es NULL. Revisa tu contraseña en DatabaseConnection.");
             return false;
         }
+
+        stmt.setString(1, vehiculo.getPlaca());
+        stmt.setString(2, vehiculo.getMarca());
+        stmt.setString(3, vehiculo.getModelo());
+        stmt.setInt(4, vehiculo.getAnioFabricacion());
+        stmt.setDouble(5, vehiculo.getCapacidadCargaKg());
+        stmt.setString(6, vehiculo.getEstado().name()); // Esto debe ser "DISPONIBLE"
+
+        System.out.println("DEBUG: Enviando consulta a MySQL...");
+        int filasAfectadas = stmt.executeUpdate();
+        System.out.println("DEBUG: Filas afectadas: " + filasAfectadas);
+        
+        return filasAfectadas > 0;
+
+    } catch (SQLException e) {
+        // 2. AQUÍ ESTÁ LA CLAVE: Imprimimos el error real de MySQL
+        System.err.println("❌ ERROR SQL REAL:");
+        e.printStackTrace(); // <--- ESTO ES LO QUE NECESITO VER
+        return false;
     }
+}
     
     // Listar: todos los camiones para mostrarlos en pantalla
     public List<Vehiculo> listarTodos(){

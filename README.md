@@ -1,40 +1,26 @@
 # RapidExpress Management System (CLI)
 
-Sistema de gestión logística backend desarrollado en Java. Permite administrar flotas, conductores, paquetería y rutas de distribución mediante una interfaz de consola robusta.
+## 🔎 Qué es
 
-##  Tecnologías
-* *Lenguaje:* Java 17+
-* *Build Tool:* Maven
-* *Base de Datos:* MySQL
-* *Arquitectura:* MVC (Modelo - Vista - Controlador) + DAO Pattern
-* *Control de Versiones:** Git / GitHub
+RapidExpress es una aplicación de consola desarrollada en Java que sirve para gestionar operaciones logísticas: flotas, conductores, paquetería, rutas y envíos. Permite crear, consultar, actualizar y eliminar datos clave para administrar envíos de forma ordenada.
 
-##  Funcionalidades Principales
+## 🛠️ Tecnologías
 
-* *Registro, consulta, edición y eliminación de **conductores**
-* *Administración de **estados del conductor**
-* *Gestión de **rutas** y estados de ruta
-* *Manejo de **flotas** y vehículos
-* *CRUD de **envíos y paquetería**
-* *Menús interactivos por consola
-* *Conexión segura a MySQL mediante clase centralizada
-* *Estructura totalmente modular y mantenible
+- Java 17+  
+- Maven como herramienta de construcción  
+- MySQL como base de datos  
+- Patrón MVC + DAO para organización del código  
 
+## ⚙️ Funcionalidades principales
 
+- CRUD completo para conductores, vehículos (flota), rutas y envíos/paquetería  
+- Gestión del estado de conductores y rutas  
+- Menús interactivos por consola para navegación sencilla  
+- Estructura modular orientada a mantenimiento y escalabilidad  
 
-##  Instalación y Ejecución
+## 🚀 Cómo ejecutar
 
-1. *Base de Datos:*
-   - Ejecute el script database/1_schema_ddl.sql en su cliente MySQL.
-   - Ejecute el script database/2_data_dml.sql para cargar datos iniciales.
-   - Configure sus credenciales en src/main/java/com/rapidexpress/config/DatabaseConnection.java.
-
-2. *Ejecución:*
-   - Compile el proyecto: mvn clean install
-   - Ejecute la clase principal: com.rapidexpress.RapidexpressManagementSystem
-
-## 👥 Autores
-- [Justin Moreno] 
-- [Ashly Perez]
-- [Thubal Contreras]
-- [Duban Marquez]
+1. Crear la base de datos: ejecutar `database/1_schema_ddl.sql`.  
+2. Cargar datos iniciales: ejecutar `database/2_data_dml.sql`.  
+3. Configurar credenciales de la base de datos en `src/main/java/com/rapidexpress/config/DatabaseConnection.java`.  
+4. Compilar el proyecto
